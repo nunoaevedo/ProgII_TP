@@ -15,7 +15,7 @@ public class Utilizador implements Serializable {
     private String nome;
     private int nHorasDiarias;
     private Role role;
-    private ArrayList<String> historico;
+    private ArrayList<Historico> historico;
     private ArrayList<Tarefa> tarefas;
     private ArrayList<String> convites;
 
@@ -113,14 +113,14 @@ public class Utilizador implements Serializable {
     /**
      * @return the historico
      */
-    public ArrayList<String> getHistorico() {
+    public ArrayList<Historico> getHistorico() {
         return historico;
     }
 
     /**
      * @param historico the historico to set
      */
-    public void setHistorico(ArrayList<String> historico) {
+    public void setHistorico(ArrayList<Historico> historico) {
         this.historico = historico;
     }
     
@@ -211,7 +211,8 @@ public class Utilizador implements Serializable {
      */
     
     public void addHistorico(String acao){
-        this.historico.add(acao);
+        Historico histo = new Historico(acao);
+        this.historico.add(histo);
     }
   
     /**

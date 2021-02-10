@@ -10,6 +10,7 @@ package Exceptions;
  * @author Demo
  */
 public class LoginErrado extends Exception {
+    
     public LoginErrado(String msg) {
         super(msg);
     }

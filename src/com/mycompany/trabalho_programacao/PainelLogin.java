@@ -149,10 +149,10 @@ public class PainelLogin extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "A password tem que ter 5 ou mais carateres!");
         }else{
             //String passwordEncriptada = this.encriptaPassword(password);
-            String passwordEncriptada = Encripta.encriptaPassword(password);
+            //String passwordEncriptada = Encripta.encriptaPassword(password);
             
             try {
-                Repositorio.getInstance().Login(user, passwordEncriptada);
+                Repositorio.getInstance().login(user, password);
                 
                 Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
                 JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);

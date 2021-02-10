@@ -5,6 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
+import Classes.Historico;
 import Classes.Utilizador;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +27,7 @@ public class Painel_verHistorico extends javax.swing.JPanel {
         this.utilizador = u;
         
         
-        Object colunas[] = {"Ordem", "Ação"};
+        Object colunas[] = {"Data", "Ação"};
         tabela.setColumnIdentifiers(colunas);
         this.historicoTabela.setModel(tabela);
         
@@ -36,17 +37,14 @@ public class Painel_verHistorico extends javax.swing.JPanel {
     
     
     public void popularTabela(){
-        int ordem = 1;
         Object obj[] = new Object[2];
         
-        for(String s: utilizador.getHistorico()){
-            obj[0] = ordem++;
-            obj[1] = s;
+        for(Historico h: utilizador.getHistorico()){
+            obj[0] = h.getData().toLocaleString();
+            obj[1] = h.getAcao();
             
             tabela.addRow(obj);
         }
-        
-       
     }
     
 

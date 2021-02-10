@@ -7,13 +7,10 @@ package com.mycompany.trabalho_programacao;
 
 
 import Classes.Repositorio;
-import Classes.Role;
-import Classes.Utilizador;
 import Exceptions.UtilizadorRepetido;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -25,7 +22,6 @@ import javax.swing.JPanel;
 public class JFrame extends javax.swing.JFrame {
 
     private static JFrame frame;
-    //private Stack<JPanel> stack;
     private JPanel painelVisivel;
     
     
@@ -170,25 +166,13 @@ public class JFrame extends javax.swing.JFrame {
     }
     
     
-    
-    public void trocaPanel(JPanel painel){
-        this.setContentPane(painel);
-    }
-    
     public void AvancarParaPainel (JPanel painelOn, JPanel painelOf){
-        //stack.add(painelOf);
         this.painelVisivel.setVisible(false);
         this.painelVisivel = painelOn ;
         this.setContentPane(this.painelVisivel);
         this.painelVisivel.setVisible(true);
     }
     
-    public void Retroceder (){
-        this.painelVisivel.setVisible(false);
-        //this.painelVisivel = stack.pop();
-        this.setContentPane(this.painelVisivel);
-        this.painelVisivel.setVisible(true);
-    }
     
     public static JFrame getFrame () {
         return frame ;

@@ -33,7 +33,7 @@ public class Repositorio implements Serializable{
     private static Repositorio repo = null;
     private static String ficheiro = "repositorio.txt";
     
-    public Repositorio(){
+    private Repositorio(){
         this.projetos = new ArrayList<>();
         this.utilizadores = new ArrayList<>();
     }
@@ -119,6 +119,7 @@ public class Repositorio implements Serializable{
                 u.setUsername("admin");
                 u.setPassword(password);
                 u.setRole(Role.Admin);
+                return;
             }
         }
         
@@ -140,14 +141,16 @@ public class Repositorio implements Serializable{
      * @throws LoginErrado - Se o username ou a password estiver errados lança exceção de login errado
      */
         
-    public void Login(String user, String pass) throws ListaVazia, LoginErrado {
+    public void login(String user, String pass) throws ListaVazia, LoginErrado {
+        
+        String password = Encripta.encriptaPassword(pass);
         
         if(this.utilizadores.isEmpty()){
-            throw new ListaVazia("Lista de Utilizadores VAZIA!");
+            throw new ListaVazia("Não há utilizadores registados!");
         }
         else{
             for(Utilizador u1: this.utilizadores){
-                if(u1.getUsername().equals(user) && u1.getPassword().equals(pass)){
+                if(u1.getUsername().equals(user) && u1.getPassword().equals(password)){
                     System.out.println("Login Efetuado!");
                     this.user = u1;
                     return;
@@ -177,51 +180,23 @@ public class Repositorio implements Serializable{
     
     /**
      * EDITAR PERFIL DE UTILIZADOR
-     * @param antigoUsername - antigo username
+     * @param perfil - Utilizador a alterar
      * @param username - novo username a alterar
      * @throws UtilizadorRepetido - já existe utilizador com o nome passado
-     * @throws UsernameInexistente  - não existe utilizador com o nome passado
      */
     
     
-    public void changeUsername(String antigoUsername, String username) throws UtilizadorRepetido, UsernameInexistente{
+    public void changeUsername(Utilizador perfil, String username) throws UtilizadorRepetido{
+        
+        
         for(Utilizador u: utilizadores)
             if(u.getUsername().equals(username))
                 throw new UtilizadorRepetido("Username já existe");
         
-        Utilizador util = this.utilizadorPorUsername(antigoUsername);
         
-        
-        for(Utilizador u: utilizadores)
-            if(u.getUsername().equals(antigoUsername)){
-                u.setUsername(username);
-                utilizadores.remove(util);
-                utilizadores.add(u);
-                return;
-            }
-        
+        perfil.setUsername(username);
     }
     
-    
-    /**
-     * ALTERAR HORAS DIARIAS DO UTILIZADOR
-     * @param username - username do utilizador
-     * @param horas - novas horas do utilizador
-     * @throws UsernameInexistente - não existe utilizador com o nome passado
-     */
-    public void changeHoras(String username, int horas) throws UsernameInexistente{
-                
-        Utilizador util = this.utilizadorPorUsername(username);
-        
-        for(Utilizador u: utilizadores)
-            if(u.getUsername().equals(username)){
-                u.setnHorasDiarias(horas);
-                utilizadores.remove(util);
-                utilizadores.add(u);
-                return;
-            }
-        
-    }
     
     /**
      * ALTERAR PASSWORD

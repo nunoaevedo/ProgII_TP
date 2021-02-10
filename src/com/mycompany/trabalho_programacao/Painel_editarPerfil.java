@@ -11,8 +11,6 @@ import Classes.Role;
 import Classes.Utilizador;
 import Exceptions.UsernameInexistente;
 import Exceptions.UtilizadorRepetido;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -424,14 +422,12 @@ public class Painel_editarPerfil extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Username vazio!");
         }else{
             try {
-                Repositorio.getInstance().changeUsername(perfil.getUsername(), username);
+                Repositorio.getInstance().changeUsername(perfil, username);
                 JOptionPane.showMessageDialog(null, "Username alterado!");
                 String historico = "Alterou o username de " + perfil.getNome() ;
                 Repositorio.getInstance().addHistorico(historico);
             } catch (UtilizadorRepetido ex) {
-                JOptionPane.showMessageDialog(null, ex);
-            } catch (UsernameInexistente ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                JOptionPane.showMessageDialog(null, "Nome de utilizador já exsite!");
             }
             
         }
@@ -447,15 +443,17 @@ public class Painel_editarPerfil extends javax.swing.JPanel {
         }else{
             try{
                 int horas = Integer.parseInt(horasDiarias);
-                Repositorio.getInstance().changeHoras(perfil.getUsername(), horas);
+                if(horas > 24 || horas <0){
+                    JOptionPane.showMessageDialog(null, "Insira um valor válido");
+                    return;
+                }
+                perfil.setnHorasDiarias(horas);
                 JOptionPane.showMessageDialog(null, "Número de Horas diárias alterado com sucesso!");
                 String historico = "Alterou Horas Diárias de " + perfil.getNome();
                 Repositorio.getInstance().addHistorico(historico);
                 
             }catch(NumberFormatException ex){
-                JOptionPane.showMessageDialog(null, "Insira um número válido");
-            } catch (UsernameInexistente ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                JOptionPane.showMessageDialog(null, "Insira um valor válido");
             }
             
             
