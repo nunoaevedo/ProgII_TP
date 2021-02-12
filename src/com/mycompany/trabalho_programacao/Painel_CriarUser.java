@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Encripta;
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Role;
 import Classes.Utilizador;
 import Exceptions.UtilizadorRepetido;
@@ -187,7 +187,7 @@ public class Painel_CriarUser extends javax.swing.JPanel {
 
     private void VoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VoltarMouseClicked
         Painel_inicial pInicial = new Painel_inicial ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(418, 300);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_VoltarMouseClicked
@@ -229,9 +229,9 @@ public class Painel_CriarUser extends javax.swing.JPanel {
             Utilizador user = new Utilizador(username, passwordEncriptada, nome, 0, Role.User);
 
             try {
-                Repositorio.getInstance().addUtilizador(user);
+                Repo.getInstance().addUtilizador(user);
                 PainelLogin pInicial = new PainelLogin ();
-                JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+                JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
                 JFrame.getFrame().setSize(408, 300);
                 JFrame.getFrame().setLocationRelativeTo(null);
             } catch (UtilizadorRepetido ex) {

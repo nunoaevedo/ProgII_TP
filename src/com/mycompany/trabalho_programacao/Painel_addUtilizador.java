@@ -6,7 +6,9 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Projeto;
-import Classes.Repositorio;
+import Classes.Repo;
+import Classes.Utilizador;
+import Exceptions.UsernameInexistente;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,7 +39,7 @@ public class Painel_addUtilizador extends javax.swing.JPanel {
     public void loadBox(){
         this.nomeBox.removeAllItems();
         
-        for(String s : Repositorio.getInstance().getPessoasParaConvidar(projeto.getNome())){
+        for(String s : Repo.getInstance().getPessoasParaConvidar(projeto.getNome())){
             this.nomeBox.addItem(s);
         }
         
@@ -197,7 +199,7 @@ public class Painel_addUtilizador extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -205,18 +207,26 @@ public class Painel_addUtilizador extends javax.swing.JPanel {
     private void adicionarbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adicionarbuttonMouseClicked
         
         String username = this.nomeBox.getItemAt(this.nomeBox.getSelectedIndex());
+        Utilizador utilizador;
+        try {
+            utilizador = Repo.getInstance().utilizadorPorUsername(username);
+            Repo.getInstance().addConvite(utilizador, projeto);
+            JOptionPane.showMessageDialog(null, "Convite enviado");
+
+
+            String historico = "Convite enviado para" + username + "para o projeto : " +projeto.getNome();
+            Repo.getInstance().addHistorico(historico);
+
+            Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().setSize(600, 400);
+            JFrame.getFrame().setLocationRelativeTo(null);
+        } catch (UsernameInexistente ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
         
-        Repositorio.getInstance().addConvite(username, projeto.getNome());
-        JOptionPane.showMessageDialog(null, "Convite enviado");
+                
         
-        
-        String historico = "Convite enviado para" + username + "para o projeto : " +projeto.getNome();
-        Repositorio.getInstance().addHistorico(historico);
-        
-        Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
-        JFrame.getFrame().setSize(600, 400);
-        JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_adicionarbuttonMouseClicked
 
 

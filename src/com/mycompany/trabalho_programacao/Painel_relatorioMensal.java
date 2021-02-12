@@ -5,7 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Tarefa;
 import Classes.Utilizador;
 import java.time.Duration;
@@ -56,7 +56,7 @@ public class Painel_relatorioMensal extends javax.swing.JPanel {
         
         float total = 0;
         
-        for(Tarefa t : Repositorio.getInstance().getTarefasRelatorioUtilizador(dataInicio, dataFim, isFinalizado, utilizador)){
+        for(Tarefa t : Repo.getInstance().getTarefasRelatorioUtilizador(dataInicio, dataFim, isFinalizado, utilizador)){
             obj[0] = t.getNome();
             obj[1] = t.getDataInicio();
             try{
@@ -276,7 +276,7 @@ public class Painel_relatorioMensal extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked

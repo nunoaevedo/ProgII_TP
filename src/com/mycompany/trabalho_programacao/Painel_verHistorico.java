@@ -142,7 +142,7 @@ public class Painel_verHistorico extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_listaPerfis pInicial = new Painel_listaPerfis ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked

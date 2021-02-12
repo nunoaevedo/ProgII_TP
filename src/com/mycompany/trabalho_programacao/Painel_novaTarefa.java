@@ -5,7 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Repositorio;
+import Classes.Repo;
 import Exceptions.nomeRepetido;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -236,7 +236,7 @@ public class Painel_novaTarefa extends javax.swing.JPanel {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton3MouseClicked
@@ -247,7 +247,7 @@ public class Painel_novaTarefa extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -283,14 +283,14 @@ public class Painel_novaTarefa extends javax.swing.JPanel {
                 if(precoString.equals(""))
                     preco = 0;
                 
-                Repositorio.getInstance().addTarefa(descricao, nome, d1, preco);
+                Repo.getInstance().addTarefa(descricao, nome, d1, preco, Repo.getInstance().getUser());
                 Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-                JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+                JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
                 JFrame.getFrame().setSize(600, 400);
                 JFrame.getFrame().setLocationRelativeTo(null);
                 
                 String historico = "Criou a tarefa " + nome ;
-                Repositorio.getInstance().addHistorico(historico);
+                Repo.getInstance().addHistorico(historico);
                 
             } catch (nomeRepetido ex) {
                 JOptionPane.showMessageDialog(null, ex);

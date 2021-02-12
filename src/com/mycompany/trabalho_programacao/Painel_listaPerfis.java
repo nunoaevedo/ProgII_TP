@@ -5,7 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Role;
 import Classes.Utilizador;
 import Exceptions.UsernameInexistente;
@@ -38,10 +38,10 @@ public class Painel_listaPerfis extends javax.swing.JPanel {
     
     public void popularTabela(){
         
-        Role role = Repositorio.getInstance().getUser().getRole();
+        Role role = Repo.getInstance().getUser().getRole();
         Object obj[] = new Object[3];
         
-        for(Utilizador u : Repositorio.getInstance().utilizadoresPorRole(role)){
+        for(Utilizador u : Repo.getInstance().utilizadoresPorRole(role)){
             obj[0] = u.getNome();
             obj[1] = u.getUsername();
             obj[2] = u.getRole();
@@ -196,11 +196,11 @@ public class Painel_listaPerfis extends javax.swing.JPanel {
             
         String username = (String) this.tabelaUsers.getValueAt(row, 1);
         try {
-            Utilizador utilizador = Repositorio.getInstance().utilizadorPorUsername(username);
+            Utilizador utilizador = Repo.getInstance().utilizadorPorUsername(username);
             
             
             Painel_editarPerfil pInicial = new Painel_editarPerfil (utilizador);
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(400, 525);
             JFrame.getFrame().setLocationRelativeTo(null);
         } catch (UsernameInexistente ex) {
@@ -218,11 +218,11 @@ public class Painel_listaPerfis extends javax.swing.JPanel {
         
         String username = (String) this.tabelaUsers.getValueAt(row, 1);
         try {
-            Utilizador utilizador = Repositorio.getInstance().utilizadorPorUsername(username);
+            Utilizador utilizador = Repo.getInstance().utilizadorPorUsername(username);
             
             
             Painel_relatorioMensal pInicial = new Painel_relatorioMensal (utilizador);
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(800, 500);
             JFrame.getFrame().setLocationRelativeTo(null);
         } catch (UsernameInexistente ex) {
@@ -230,14 +230,14 @@ public class Painel_listaPerfis extends javax.swing.JPanel {
         }
         
         /*Painel_relatorioMensal pInicial = new Painel_relatorioMensal ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(650, 300);
         JFrame.getFrame().setLocationRelativeTo(null);*/
     }//GEN-LAST:event_relatorioMensalButtonMouseClicked
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -255,10 +255,10 @@ public class Painel_listaPerfis extends javax.swing.JPanel {
         
         String username = (String) this.tabelaUsers.getValueAt(row, 1);
         try {
-            Utilizador utilizador = Repositorio.getInstance().utilizadorPorUsername(username);
+            Utilizador utilizador = Repo.getInstance().utilizadorPorUsername(username);
             
             Painel_verHistorico pInicial = new Painel_verHistorico (utilizador);
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(400, 525);
             JFrame.getFrame().setLocationRelativeTo(null);
         } catch (UsernameInexistente ex) {

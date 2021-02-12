@@ -6,7 +6,11 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Projeto;
-import Classes.Repositorio;
+import Classes.Repo;
+import Classes.Utilizador;
+import Exceptions.UsernameInexistente;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,8 +39,8 @@ public class Painel_retirarUtilizador extends javax.swing.JPanel {
     public void loadData(){
         
         this.nomeBox.removeAllItems();
-        for(String convidado : projeto.getConvidados()){
-            this.nomeBox.addItem(convidado);
+        for(Utilizador convidado : projeto.getConvidados()){
+            this.nomeBox.addItem(convidado.getNome());
         }
         
         
@@ -194,7 +198,7 @@ public class Painel_retirarUtilizador extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -207,17 +211,25 @@ public class Painel_retirarUtilizador extends javax.swing.JPanel {
         
         String username = this.nomeBox.getItemAt(this.nomeBox.getSelectedIndex());
         
-        Repositorio.getInstance().addConvite(username, projeto.getNome());
-        JOptionPane.showMessageDialog(null, "Utilizador removido");
         
         
-        String historico = "Removeu utilizador " + username + " do projeto : " +projeto.getNome();
-        Repositorio.getInstance().addHistorico(historico);
+        try {
+            Utilizador user = Repo.getInstance().utilizadorPorUsername(username);
+            projeto.removeConvidado(user);
+            
+            JOptionPane.showMessageDialog(null, "Utilizador removido");
         
-        Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
-        JFrame.getFrame().setSize(600, 400);
-        JFrame.getFrame().setLocationRelativeTo(null);
+        
+            String historico = "Removeu utilizador " + username + " do projeto : " + projeto.getNome();
+            Repo.getInstance().addHistorico(historico);
+
+            Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().setSize(600, 400);
+            JFrame.getFrame().setLocationRelativeTo(null);
+        } catch (UsernameInexistente ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
         
     }//GEN-LAST:event_eliminarButtonMouseClicked
 

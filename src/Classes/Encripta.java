@@ -36,8 +36,7 @@ public class Encripta {
             
             
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Painel_CriarUser.class.getName()).log(Level.SEVERE, null, ex);
-            ex.printStackTrace();
+            System.out.println("Algoritmo Inexistente" + ex);
         }
         
         return generatedPassword;

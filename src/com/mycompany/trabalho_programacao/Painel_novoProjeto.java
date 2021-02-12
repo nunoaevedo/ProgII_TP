@@ -5,8 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Repositorio;
-import Classes.Utilizador;
+import Classes.Repo;
 import Exceptions.ProjetoRepetido;
 import javax.swing.JOptionPane;
 
@@ -193,7 +192,7 @@ public class Painel_novoProjeto extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -227,16 +226,16 @@ public class Painel_novoProjeto extends javax.swing.JPanel {
             
             try {
                 float preco = Float.parseFloat(precoString);
-                Utilizador user = Repositorio.getInstance().getUser();
                 
-                Repositorio.getInstance().addProjeto(nomeCliente, nome, preco, user.getUsername());
+                
+                Repo.getInstance().addProjeto(nomeCliente, nome, preco, Repo.getInstance().getUser());
                 
                 JOptionPane.showMessageDialog(null, "Projeto criado!");
                 String historico = "Criou o projeto " + nome ;
-                Repositorio.getInstance().addHistorico(historico);
+                Repo.getInstance().addHistorico(historico);
                 
                 Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
-                JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+                JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
                 JFrame.getFrame().setSize(600, 400);
                 JFrame.getFrame().setLocationRelativeTo(null);
                 

@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Projeto;
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Tarefa;
 import javax.swing.JOptionPane;
 
@@ -37,9 +37,9 @@ public class Painel_editarTarefas extends javax.swing.JPanel {
     
     public void loadBox(){
         this.projetoBox.removeAll();
-        String username = Repositorio.getInstance().getUser().getUsername();
+        String username = Repo.getInstance().getUser().getUsername();
         
-        for(Projeto p: Repositorio.getInstance().getProjetosByUsername(username)){
+        for(Projeto p: Repo.getInstance().getProjetosByUsername(username)){
             this.projetoBox.addItem(p.getNome());
         }
         
@@ -274,7 +274,7 @@ public class Painel_editarTarefas extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -286,15 +286,15 @@ public class Painel_editarTarefas extends javax.swing.JPanel {
     private void descricaoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_descricaoButtonMouseClicked
         String descricao = this.descricaoField.getText();
         
-        String username = Repositorio.getInstance().getUser().getUsername();
+        String username = Repo.getInstance().getUser().getUsername();
         String tarefaString = tarefa.getNome();
         
-        Repositorio.getInstance().alteraDescricaoTarefa(username, tarefaString, descricao);
+        Repo.getInstance().alteraDescricaoTarefa(username, tarefaString, descricao);
         
         JOptionPane.showMessageDialog(null, "Descrição alterada!");
         
         String historico = "Alterou descrição de " + tarefaString;
-        Repositorio.getInstance().addHistorico(historico);
+        Repo.getInstance().addHistorico(historico);
         
         
         
@@ -309,15 +309,15 @@ public class Painel_editarTarefas extends javax.swing.JPanel {
             if(precoString.equals(""))
                 preco = 0;
             
-            String username = Repositorio.getInstance().getUser().getUsername();
+            String username = Repo.getInstance().getUser().getUsername();
             String tarefa = this.tarefa.getNome();
 
-            Repositorio.getInstance().alteraPrecoTarefa(username, tarefa, preco);
+            Repo.getInstance().alteraPrecoTarefa(username, tarefa, preco);
 
             JOptionPane.showMessageDialog(null, "Preço alterado");
 
             String historico = "Alterou preço da tarefa " + tarefa ;
-            Repositorio.getInstance().addHistorico(historico);
+            Repo.getInstance().addHistorico(historico);
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Insira um valor válido");
         }
@@ -331,15 +331,12 @@ public class Painel_editarTarefas extends javax.swing.JPanel {
         if(this.projetoBox.getSelectedIndex() != 0){
             
             String projeto = this.projetoBox.getItemAt(this.projetoBox.getSelectedIndex());
+            Projeto p = Repo.getInstance().getProjetoByName(projeto);
             
-            String username = Repositorio.getInstance().getUser().getUsername();
-            String tarefaString = this.tarefa.getNome();
+            tarefa.setProjeto(p);
             
-            Repositorio.getInstance().addTarefaProjeto(username, tarefaString, projeto);
-            
-            
-            String historico = "Alterou a tarefa " + tarefaString + " para o projeto : " + projeto ;
-            Repositorio.getInstance().addHistorico(historico);
+            String historico = "Alterou a tarefa " + tarefa.getNome() + " para o projeto : " + projeto ;
+            Repo.getInstance().addHistorico(historico);
             
             JOptionPane.showMessageDialog(null, "Projeto alterado");
             

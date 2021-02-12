@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Projeto;
-import Classes.Repositorio;
+import Classes.Repo;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,13 +37,12 @@ public class Painel_verConvites extends javax.swing.JPanel {
     
     public void popularTabela(){
         Object obj[] = new Object[4];
-        for(String convite : Repositorio.getInstance().getUser().getConvites()){
-            Projeto p = Repositorio.getInstance().getProjetoByName(convite);
+        for(Projeto convite : Repo.getInstance().getUser().getConvites()){
             
-            obj[0] = p.getNome();
-            obj[1] = p.getNomeCliente();
-            obj[2] = p.getPrecoHora();
-            obj[2] = p.getDono();
+            obj[0] = convite.getNome();
+            obj[1] = convite.getNomeCliente();
+            obj[2] = convite.getPrecoHora();
+            obj[2] = convite.getDono();
 
             tabela.addRow(obj);
                 
@@ -171,7 +170,7 @@ public class Painel_verConvites extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -190,11 +189,11 @@ public class Painel_verConvites extends javax.swing.JPanel {
         
         String projeto = (String) this.conviteTabela.getValueAt(row, 0);
         
-        Repositorio.getInstance().removeConvite(projeto);
+        Repo.getInstance().getUser().removeConvite(projeto);
         
         
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
         
@@ -209,12 +208,12 @@ public class Painel_verConvites extends javax.swing.JPanel {
         
         String projeto = (String) this.conviteTabela.getValueAt(row, 0);
         
-        Repositorio.getInstance().removeConvite(projeto);
-        Repositorio.getInstance().addConvidado(projeto);
+        Repo.getInstance().getUser().removeConvite(projeto);
+        Repo.getInstance().addConvidado(projeto);
                 
         
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_aceitarButtonMouseClicked

@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Projeto;
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Tarefa;
 import Classes.Utilizador;
 import java.time.Duration;
@@ -52,14 +52,14 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
     
     public void popularTabela(Date dataInicio, Date dataFim, boolean finalizado, Projeto projeto){
         
-        Utilizador utilizador = Repositorio.getInstance().getUser();
+        Utilizador utilizador = Repo.getInstance().getUser();
         
         tabela.setRowCount(0);
         Object obj[] = new Object[4];
         
         float total = 0;
         
-        for(Tarefa t : Repositorio.getInstance().getTarefasRelatorioProjeto(dataInicio, dataFim, finalizado, projeto)){
+        for(Tarefa t : Repo.getInstance().getTarefasRelatorioProjeto(dataInicio, dataFim, finalizado, projeto)){
             obj[0] = t.getNome();
             obj[1] = t.getDataInicio();
             try{
@@ -279,7 +279,7 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_verProjetos pInicial = new Painel_verProjetos ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked

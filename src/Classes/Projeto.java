@@ -8,23 +8,21 @@ public class Projeto implements Serializable{
     private String nomeCliente;
     private String nome;
     private float precoHora;
+    private Utilizador dono;
+    private ArrayList<Utilizador> convidados;
     private ArrayList<Tarefa> tarefas;
-    private String dono;
-    private ArrayList<String> convidados;
     
     /**
      * CONSTRUTOR
      * @param nomeCliente - nome do cliente do projeto
      * @param nome - nome do projeto
      * @param precoHora - preco por hora do projeto
-     * @param dono - username do dono do projeto
+     * @param dono - dono do projeto
      */
-
-    public Projeto(String nomeCliente, String nome, float precoHora, String dono){
+    public Projeto(String nomeCliente, String nome, float precoHora, Utilizador dono){
         this.nomeCliente = nomeCliente;
         this.nome = nome;
         this.precoHora = precoHora;
-        this.tarefas = new ArrayList<>();
         this.dono = dono;
         this.convidados = new ArrayList<>();
     }
@@ -72,94 +70,50 @@ public class Projeto implements Serializable{
     }
 
     /**
-     * @return the tarefas
-     */
-    public ArrayList<Tarefa> getTarefas() {
-        return tarefas;
-    }
-
-    /**
-     * @param tarefas the tarefas to set
-     */
-    public void setTarefas(ArrayList<Tarefa> tarefas) {
-        this.tarefas = tarefas;
-    }
-
-    /**
      * @return the dono
      */
-    public String getDono() {
+    public Utilizador getDono() {
         return dono;
     }
 
     /**
      * @param dono the dono to set
      */
-    public void setDono(String dono) {
+    public void setDono(Utilizador dono) {
         this.dono = dono;
     }
 
     /**
      * @return the convidados
      */
-    public ArrayList<String> getConvidados() {
+    public ArrayList<Utilizador> getConvidados() {
         return convidados;
     }
 
     /**
      * @param convidados the convidados to set
      */
-    public void setConvidados(ArrayList<String> convidados) {
+    public void setConvidados(ArrayList<Utilizador> convidados) {
         this.convidados = convidados;
     }
 
     
     /**
      * ADICIONAR UTILIZADOR CONVIDADO AO PROJETO
-     * @param username - uername do utilizador a adicionar
+     * @param user - utilizador a adicionar
      */
     
-    public void addConvidado(String username){
-        this.convidados.add(username);
+    public void addConvidado(Utilizador user){
+        this.convidados.add(user);
     }
     
     /**
      * REMOVER CONVIDADO
-     * @param username -username do utilizador a remover
+     * @param user - utilizador a remover
      */
     
-    public void removeConvidado(String username){
-        this.convidados.remove(username);
-    }
-
-    /**
-     * ADICIONAR TAREFA AO PROJETO
-     * @param t - tarefa a adicionar
-     */
-    public void addTarefa(Tarefa t){
-        if(this.tarefas.contains(t)){
-            throw new IllegalArgumentException("Tarefa já existe no projeto");
-        }
-        
-        this.tarefas.add(t);
+    public void removeConvidado(Utilizador user){
+        this.convidados.remove(user);
     }
     
-    /**
-     * REMOVER TAREFA DO PROJETO
-     * @param t - tarefa a remover
-     */
-    
-    public void removeTarefa(Tarefa t){
-        if(this.tarefas.contains(t)){
-            this.tarefas.remove(t);
-        }
-        
-        throw new IllegalArgumentException("Tarefa não existe no projeto");
-    }
-
-
-
-
-
-
 }

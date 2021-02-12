@@ -6,8 +6,10 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Projeto;
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Tarefa;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,7 +38,7 @@ public class Painel_verTarefas extends javax.swing.JPanel {
     public void popularTabela(){
         
         Object obj[] = new Object[5];
-        for(Tarefa t : Repositorio.getInstance().getUser().getTarefas()){
+        for(Tarefa t : Repo.getInstance().getUser().getTarefas()){
             
             obj[0] = t.getNome();
             obj[1] = t.getDataInicio();
@@ -45,7 +47,7 @@ public class Painel_verTarefas extends javax.swing.JPanel {
             obj[3] = preco;
             String nomeProjeto;
             try{
-                nomeProjeto = Repositorio.getInstance().getProjetoByTarefa(t).getNome();
+                nomeProjeto = Repo.getInstance().getProjetoByTarefa(t).getNome();
             }catch (NullPointerException e){
                 nomeProjeto = "";
             }
@@ -179,7 +181,7 @@ public class Painel_verTarefas extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -197,11 +199,10 @@ public class Painel_verTarefas extends javax.swing.JPanel {
         
         String tarefa = (String) this.tarefaTabela.getValueAt(row, 0);
         
-        Tarefa t = Repositorio.getInstance().getTarefaNome(Repositorio.getInstance().getUser().getUsername(), tarefa);
-        
+        Tarefa t = Repo.getInstance().getTarefaNome(tarefa);
         
         Painel_editarTarefas pInicial = new Painel_editarTarefas(t);
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(400, 500);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_editaTarefaMouseClicked
@@ -214,16 +215,18 @@ public class Painel_verTarefas extends javax.swing.JPanel {
         }
         
         String tarefa = (String) this.tarefaTabela.getValueAt(row, 0);
+        Tarefa t = Repo.getInstance().getTarefaNome(tarefa);
+        try {
+            Repo.getInstance().removeTarefa(t);
+            JOptionPane.showMessageDialog(null, "Tarefa removida");
         
-        Repositorio.getInstance().removeTarefa(Repositorio.getInstance().getUser().getUsername(), tarefa);
-        
-        JOptionPane.showMessageDialog(null, "Tarefa removida");
-        
-        String historico = "Removeu a tarefa " + tarefa;
-        Repositorio.getInstance().addHistorico(historico);
-        
-        tabela.removeRow(row);
-        
+            String historico = "Removeu a tarefa " + tarefa;
+            Repo.getInstance().addHistorico(historico);
+
+            tabela.removeRow(row);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Nome de tarefa não existe");
+        }
     }//GEN-LAST:event_apagarTarefaMouseClicked
 
 

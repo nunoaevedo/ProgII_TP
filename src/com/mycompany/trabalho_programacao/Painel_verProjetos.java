@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Projeto;
-import Classes.Repositorio;
+import Classes.Repo;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,8 +36,8 @@ public class Painel_verProjetos extends javax.swing.JPanel {
     
     public void popularTabela(){
         Object obj[] = new Object[4];
-        String username = Repositorio.getInstance().getUser().getUsername();
-        for(Projeto p : Repositorio.getInstance().getProjetosByUsername(username) ){
+        String username = Repo.getInstance().getUser().getUsername();
+        for(Projeto p : Repo.getInstance().getProjetosByUsername(username) ){
             obj[0] = p.getNome();
             obj[1] = p.getNomeCliente();
             String preco = String.format("%,.2f", p.getPrecoHora());
@@ -204,7 +204,7 @@ public class Painel_verProjetos extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -223,16 +223,16 @@ public class Painel_verProjetos extends javax.swing.JPanel {
         
         String projeto = (String) this.tabelaProjetos.getValueAt(row, 0);
         
-        Projeto proj = Repositorio.getInstance().getProjetoByName(projeto);
+        Projeto proj = Repo.getInstance().getProjetoByName(projeto);
         
         if(proj.getConvidados().isEmpty()){
             JOptionPane.showMessageDialog(null, "O projeto não tem utilizadores convidados");
             return;
         }
         
-        if(proj.getDono().equals(Repositorio.getInstance().getUser().getUsername())){
+        if(proj.getDono().equals(Repo.getInstance().getUser().getUsername())){
             Painel_retirarUtilizador pInicial = new Painel_retirarUtilizador(proj);  
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(450, 400);
             JFrame.getFrame().setLocationRelativeTo(null);
         }else{
@@ -252,11 +252,11 @@ public class Painel_verProjetos extends javax.swing.JPanel {
         }
         
         String projeto = (String) this.tabelaProjetos.getValueAt(row, 0);
-        Projeto proj = Repositorio.getInstance().getProjetoByName(projeto);
+        Projeto proj = Repo.getInstance().getProjetoByName(projeto);
         
-        if(proj.getDono().equals(Repositorio.getInstance().getUser().getUsername())){
+        if(proj.getDono().equals(Repo.getInstance().getUser().getUsername())){
             Painel_addUtilizador pInicial = new Painel_addUtilizador(proj);  
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(450, 400);
             JFrame.getFrame().setLocationRelativeTo(null);
         }else{
@@ -280,10 +280,10 @@ public class Painel_verProjetos extends javax.swing.JPanel {
         }
         
         String projeto = (String) this.tabelaProjetos.getValueAt(row, 0);
-        Projeto proj = Repositorio.getInstance().getProjetoByName(projeto);
+        Projeto proj = Repo.getInstance().getProjetoByName(projeto);
         
         Painel_relatorioMensalProjeto pInicial = new Painel_relatorioMensalProjeto(proj);  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(800, 500);
         JFrame.getFrame().setLocationRelativeTo(null);
         

@@ -5,7 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Role;
 import javax.swing.JOptionPane;
 
@@ -21,7 +21,7 @@ public class Painel_menuUtilizador extends javax.swing.JPanel {
     public Painel_menuUtilizador() {
         initComponents();
         
-        if(Repositorio.getInstance().getUser().getRole().equals(Role.User)){
+        if(Repo.getInstance().getUser().getRole().equals(Role.User)){
             this.painelAdmin.setVisible(false);
         }
         
@@ -290,83 +290,83 @@ public class Painel_menuUtilizador extends javax.swing.JPanel {
 
     private void terminarSessaoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_terminarSessaoButtonMouseClicked
         Painel_inicial pInicial = new Painel_inicial ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(418, 289);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_terminarSessaoButtonMouseClicked
 
     private void terminarTarefasButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_terminarTarefasButtonMouseClicked
         Painel_terminarTarefa pInicial = new Painel_terminarTarefa ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_terminarTarefasButtonMouseClicked
 
     private void verProjetosButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verProjetosButtonMouseClicked
         Painel_verProjetos pInicial = new Painel_verProjetos();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);        
     }//GEN-LAST:event_verProjetosButtonMouseClicked
 
     private void novoProjetoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_novoProjetoButtonMouseClicked
         Painel_novoProjeto pInicial = new Painel_novoProjeto ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_novoProjetoButtonMouseClicked
 
     private void novaTarefaButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_novaTarefaButtonMouseClicked
         Painel_novaTarefa pInicial = new Painel_novaTarefa ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_novaTarefaButtonMouseClicked
 
     private void verPerfilButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verPerfilButtonMouseClicked
         Painel_verPerfil pInicial = new Painel_verPerfil ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_verPerfilButtonMouseClicked
 
     private void verTarefasButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verTarefasButtonMouseClicked
         Painel_verTarefas pInicial = new Painel_verTarefas ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_verTarefasButtonMouseClicked
 
     private void adicionarUtilizadorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adicionarUtilizadorButtonMouseClicked
-        Painel_CriarUserAdmin pInicial = new Painel_CriarUserAdmin (Repositorio.getInstance().getUser());
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        Painel_CriarUserAdmin pInicial = new Painel_CriarUserAdmin (Repo.getInstance().getUser());
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_adicionarUtilizadorButtonMouseClicked
 
     private void listarPerfisButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listarPerfisButtonMouseClicked
         Painel_listaPerfis pInicial = new Painel_listaPerfis ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(450, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_listarPerfisButtonMouseClicked
 
     private void relatorioMensalButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_relatorioMensalButtonMouseClicked
-        Painel_relatorioMensal pInicial = new Painel_relatorioMensal (Repositorio.getInstance().getUser());
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        Painel_relatorioMensal pInicial = new Painel_relatorioMensal (Repo.getInstance().getUser());
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(800, 500);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_relatorioMensalButtonMouseClicked
 
     private void verConvitesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verConvitesButtonMouseClicked
         
-        if(Repositorio.getInstance().getUser().getConvites().isEmpty()){
+        if(Repo.getInstance().getUser().getConvites().isEmpty()){
             JOptionPane.showMessageDialog(null, "Não tem novos convites para projetos!");
             return;
         }
         
         Painel_verConvites pInicial = new Painel_verConvites ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(400, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_verConvitesButtonMouseClicked

@@ -1,10 +1,8 @@
 package Classes;
 
 import Classes.Role;
-import Exceptions.nomeRepetido;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Utilizador implements Serializable {
 
@@ -17,7 +15,7 @@ public class Utilizador implements Serializable {
     private Role role;
     private ArrayList<Historico> historico;
     private ArrayList<Tarefa> tarefas;
-    private ArrayList<String> convites;
+    private ArrayList<Projeto> convites;
 
     
     /**
@@ -125,6 +123,20 @@ public class Utilizador implements Serializable {
     }
     
     /**
+     * @return the convites
+     */
+    public ArrayList<Projeto> getConvites() {
+        return convites;
+    }
+
+    /**
+     * @param convites the convites to set
+     */
+    public void setConvites(ArrayList<Projeto> convites) {
+        this.convites = convites;
+    }
+    
+    /**
      * @return the tarefas
      */
     public ArrayList<Tarefa> getTarefas() {
@@ -138,72 +150,7 @@ public class Utilizador implements Serializable {
         this.tarefas = tarefas;
     }
     
-    /**
-     * @return the convites
-     */
-    public ArrayList<String> getConvites() {
-        return convites;
-    }
-
-    /**
-     * @param convites the convites to set
-     */
-    public void setConvites(ArrayList<String> convites) {
-        this.convites = convites;
-    }
     
-    
-    /**
-     * 
-     * @param name - nome da tarefa
-     * @return tarefa
-     */
-    public Tarefa getTarefaByName(String name){
-        for(Tarefa t : tarefas)
-            if(t.getNome().equals(name))
-                return t;
-        
-        throw new IllegalArgumentException(String.format("Não existe nenhuma tarefa com o nome : %s", name));
-    }
-    
-    
-    /**
-     * ADICIONAR TAREFA
-     * @param tarefa - tarefa a adicionar
-     * @throws nomeRepetido - se já existir uma tarefa com o nome indicado
-     */
-    public void addTarefa(Tarefa tarefa) throws nomeRepetido{
-        for(Tarefa t : getTarefas())
-            if(t.getNome().equals(tarefa.getNome()))
-                throw new nomeRepetido("Já existe uma tarefa com o nome indicado");
-        
-        this.getTarefas().add(tarefa);
-    }
-
-    /**
-     * TERMINAR TAREFA
-     * @param tarefa - tarefa a finalizar
-     * @param datafim - data de fim da tarefa
-     */
-
-    public void terminaTarefa(String tarefa, Date datafim){
-        Tarefa t = getTarefaByName(tarefa);
-
-        if (datafim.before(t.getDataInicio())){
-            throw new IllegalArgumentException(String.format("A data final indicada(%s) é anterior à data inicial(%s)", datafim.toString(), t.getDataInicio().toString()));
-        }
-
-        t.setDataFim(datafim);
-        t.setFinalizada(true);
-
-    }
-    /**
-     * REMOVER TAREFA DA LISTA DO UTILIZADOR
-     * @param tarefa - tarefa a remover
-     */
-    public void removeTarefa(Tarefa tarefa){
-        this.tarefas.remove(tarefa);
-    }
     
     /**
      * ADICIONAR HISTORICO
@@ -217,11 +164,11 @@ public class Utilizador implements Serializable {
   
     /**
      * ADICIONAR CONVITE
-     * @param nomeProjeto - nome do projeto para o qual foi convidado 
+     * @param projeto - projeto para o qual foi convidado 
      */
   
-    public void addConvite(String nomeProjeto){
-        this.convites.add(nomeProjeto);
+    public void addConvite(Projeto projeto){
+        this.convites.add(projeto);
     }
   
   
@@ -230,7 +177,30 @@ public class Utilizador implements Serializable {
      * @param nomeProjeto - nome projeto a remover dos convites 
      */
     public void removeConvite(String nomeProjeto){
-        this.convites.remove(nomeProjeto);
+        for(Projeto p : this.convites){
+            if(p.getNome().equals(nomeProjeto)){
+                convites.remove(p);
+                return;
+            }
+        }
+        
+        throw new IllegalArgumentException("Nome de projeto não existe na lista de convites!");
+    }
+    
+    /**
+     * ADICINAR TAREFA À LISTA
+     * @param t - tarefa a adicionar
+     */
+    public void addTarefa(Tarefa t){
+        this.tarefas.add(t);
+    }
+
+    /**
+     * REMOVER TAREFA
+     * @param t - tarefa a remover
+     */
+    public void removeTarefa(Tarefa t){
+        this.tarefas.remove(t);
     }
 
     

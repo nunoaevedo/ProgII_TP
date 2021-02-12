@@ -5,13 +5,14 @@
  */
 package Classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Nuno
  */
-public class Historico {
+public class Historico implements Serializable {
     private Date data;
     private String acao;
     

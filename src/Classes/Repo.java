@@ -25,22 +25,24 @@ import java.util.Date;
  *
  * @author Nuno
  */
-public class Repositorio implements Serializable{
+public class Repo implements Serializable{
     
     private ArrayList<Projeto> projetos;
     private ArrayList<Utilizador> utilizadores;
-    private Utilizador user = null;
-    private static Repositorio repo = null;
+    private ArrayList<Tarefa> tarefas;
+    private Utilizador userLogado = null;
+    private static Repo repo = null;
     private static String ficheiro = "repositorio.txt";
     
-    private Repositorio(){
+    private Repo(){
         this.projetos = new ArrayList<>();
         this.utilizadores = new ArrayList<>();
+        this.tarefas = new ArrayList<>();
     }
     
-    public static Repositorio getInstance() {
+    public static Repo getInstance() {
         if (repo == null) {
-            repo = new Repositorio();
+            repo = new Repo();
         }
         return repo;
     }
@@ -95,11 +97,29 @@ public class Repositorio implements Serializable{
     }
 
     /**
-     * @return the user
+     * @return the userLogado
      */
     public Utilizador getUser() {
-        return user;
+        return userLogado;
     }
+    
+    
+     /**
+     * @return the tarefas
+     */
+    public ArrayList<Tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    /**
+     * @param tarefas the tarefas to set
+     */
+    public void setTarefas(ArrayList<Tarefa> tarefas) {
+        this.tarefas = tarefas;
+    }
+
+    
+    
     
     /**
      * ADICIONAR ADMIN
@@ -152,7 +172,7 @@ public class Repositorio implements Serializable{
             for(Utilizador u1: this.utilizadores){
                 if(u1.getUsername().equals(user) && u1.getPassword().equals(password)){
                     System.out.println("Login Efetuado!");
-                    this.user = u1;
+                    this.userLogado = u1;
                     return;
                 }
             }
@@ -176,6 +196,20 @@ public class Repositorio implements Serializable{
         this.utilizadores.add(ut);
         
     } 
+    
+    /**
+     * GET UTILIZADOR POR NOME
+     * @param utilizador - nome de utilizador
+     * @return - utilizador
+     */
+    public Utilizador getUserByName(String utilizador){
+        for(Utilizador u: this.utilizadores)
+            if(u.getNome().equals(utilizador))
+                return u;
+        
+        throw new IllegalArgumentException(String.format("Não existe nenhum utilizador com o nome : %s", utilizador));
+        
+    }
     
     
     /**
@@ -283,7 +317,7 @@ public class Repositorio implements Serializable{
      */
     
     public void addHistorico(String acao){
-        this.user.addHistorico(acao);
+        this.userLogado.addHistorico(acao);
     }
     
     
@@ -301,7 +335,7 @@ public class Repositorio implements Serializable{
      * @throws ProjetoRepetido - se já existir um projeto com o nome passado
      */
     
-    public void addProjeto(String nomeCliente, String nome, float preco, String dono) throws ProjetoRepetido{
+    public void addProjeto(String nomeCliente, String nome, float preco, Utilizador dono) throws ProjetoRepetido{
         
         for(Projeto p : projetos)
             if(p.getNome().equals(nome))
@@ -350,36 +384,27 @@ public class Repositorio implements Serializable{
     
     /**
      * ADICIONAR CONTIVE
-     * @param username - username do utilizador a enviar convite
-     * @param nomeProjeto - nome do projeto 
+     * @param user - utilizador a enviar convite
+     * @param projeto - projeto ao qual foi convidado
      */
-    public void addConvite(String username, String nomeProjeto){
-        for(int i = 0; i< utilizadores.size(); i++){
-            if(utilizadores.get(i).getUsername().equals(username)){
-                utilizadores.get(i).addConvite(nomeProjeto);
-            }
-        }
-    }
-    
-    /**
-     * REMOVER CONVITE
-     * @param nomeProjeto nome do projeto a remover o convite 
-     */
-    public void removeConvite(String nomeProjeto){
-        this.user.removeConvite(nomeProjeto);
+    public void addConvite(Utilizador user, Projeto projeto){
+        user.addConvite(projeto);
     }
     
     
     /**
      * ADICIONAR CONVIDADO A UM PROJETO
-     * @param nomeProjeto - nome do projeto a adicionar
+     * @param projeto - nome do projeto a adicionar
      */
-    public void addConvidado(String nomeProjeto){
-        for(int i = 0; i<projetos.size(); i++){
-            if(projetos.get(i).getNome().equals(nomeProjeto)){
-                projetos.get(i).addConvidado(this.user.getUsername());
+    public void addConvidado(String projeto){
+        for(Projeto p : this.projetos){
+            if(p.getNome().equals(projeto)){
+                p.addConvidado(userLogado);
+                return;
             }
         }
+        throw new IllegalArgumentException("Nome de projeto não existe!");
+            
     }
     
     /**
@@ -403,16 +428,12 @@ public class Repositorio implements Serializable{
     
     /**
      * REMOVE UTILIZADOR DE PROJETO
-     * @param username - username do utilizador
-     * @param projeto - nome do projeto
+     * @param utilizador - utilizador a remover
+     * @param projeto - projeto em questão
      */
     
-    public void removeUtilizadorDeProjeto(String username, String projeto){
-        for(int i = 0; i<projetos.size();i++)
-            if(this.projetos.get(i).getConvidados().contains(username)){
-                this.projetos.get(i).removeConvidado(username);
-                return;
-            }
+    public void removeUtilizadorDeProjeto(Utilizador utilizador, Projeto projeto){
+        projeto.removeConvidado(utilizador);
     }
     
     /**
@@ -421,17 +442,7 @@ public class Repositorio implements Serializable{
      * @return - Projeto que contem a tarefa
      */
     public Projeto getProjetoByTarefa(Tarefa t){
-        Projeto p = null;
-        
-        for(Projeto projeto : projetos){
-            if(projeto.getTarefas().contains(t)){
-                p= projeto;
-                break;
-            }
-        }
-        
-        
-        return p;
+        return t.getProjeto();
     }
     
     
@@ -449,31 +460,27 @@ public class Repositorio implements Serializable{
      */
     
     
-    public void addTarefa(String descricao, String nome, Date dataInicio, float preco) throws nomeRepetido{
+    public void addTarefa(String descricao, String nome, Date dataInicio, float preco, Utilizador dono) throws nomeRepetido{
         
-        Tarefa t = new Tarefa(descricao, nome, dataInicio, preco);
-        this.user.addTarefa(t);
-        
+        Tarefa t = new Tarefa(descricao, nome, dataInicio, preco, dono);
+        this.tarefas.add(t);
+        dono.addTarefa(t);
     }
     
     
    /**
     * REMOVE TAREFA
-    * @param username - username do utilizador
-    * @param nome - nome da tarefa a remover
+    * @param utilizador - utilizador
+    * @param t - tarefa a remover
     */
     
-    
-    
-    public void removeTarefa(String username, String nome){
+    public void removeTarefa(Tarefa t) throws Exception{
         
-        Tarefa tarefa = this.getTarefaNome(username, nome);
+        if(t.getProjeto() != null)
+            throw new Exception("A tarefa a remover possui um projeto associado!");
         
-        for(int i = 0; i < utilizadores.size(); i++){
-            if(utilizadores.get(i).getUsername().equals(username)){
-                utilizadores.get(i).removeTarefa(tarefa);
-            }
-        }
+        t.getDono().removeTarefa(t);
+        this.tarefas.remove(t);
         
     }
     
@@ -484,23 +491,12 @@ public class Repositorio implements Serializable{
      * @return tarefa
      */
     
-    public Tarefa getTarefaNome(String username, String nome){
-        Tarefa tarefa = null;
+    public Tarefa getTarefaNome(String nomeTarefa){
+        for(Tarefa t: this.tarefas)
+            if(t.getNome().equals(nomeTarefa))
+                return t;
         
-        for(Utilizador u : this.utilizadores){
-            if(u.getUsername().equals(username)){
-                for(Tarefa t : u.getTarefas()){
-                    if(t.getNome().equals(nome)){
-                        tarefa = t;
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        
-        return tarefa;
-        
+        throw new IllegalArgumentException("Nome de tarefa inexestente");
     }
     
     
@@ -560,41 +556,17 @@ public class Repositorio implements Serializable{
      * @param projeto - nome do projeto a alterar
      */
     
-    public void addTarefaProjeto(String username, String tarefaNome, String projeto){
-        Tarefa tarefa = this.getTarefaNome(username, tarefaNome);
-        
-        for(int i=0; i<projetos.size(); i++){
-            if(projetos.get(i).getTarefas().contains(tarefa)){
-                this.removeTarefaProjeto(username, tarefaNome, projeto);
-                break;
-            }
-        }
-        
-        for(int i=0; i<projetos.size(); i++){
-            if(projetos.get(i).getNome().equals(projeto)){
-                if(tarefa.getPreco() == 0){
-                    tarefa.setPreco(projetos.get(i).getPrecoHora());
-                }
-                
-                projetos.get(i).addTarefa(tarefa);
-            }
-        }
+    public void addTarefaProjeto(Tarefa tarefa, Projeto projeto){
+        tarefa.setProjeto(projeto);
     }
     
     /**
      * REMOVER TAREFA DO PROJETO EM QUESTÃO
-     * @param username - nome do utilizador que remove a tarefa
-     * @param tarefaNome - nome da tarefa a remover
-     * @param projeto - nome do projeto onde está inserida a tarefa
+     * @param tarefa - nome da tarefa a remover
      */
     
-    public void removeTarefaProjeto(String username, String tarefaNome, String projeto){
-        for(int i=0; i<projetos.size(); i++){
-            if(projetos.get(i).getNome().equals(projeto)){
-                Tarefa tarefa = this.getTarefaNome(username, tarefaNome);
-                projetos.get(i).removeTarefa(tarefa);
-            }
-        }
+    public void removeTarefaProjeto(Tarefa tarefa){
+        tarefa.setProjeto(null);
     }
     
     
@@ -611,8 +583,8 @@ public class Repositorio implements Serializable{
         
         ArrayList<Tarefa> tarefas = new ArrayList<>();
         
-        for(Tarefa t: user.getTarefas()){
-            if(t.getDataFim().after(dateInicio) && t.getDataFim().before(dateFim)){
+        for(Tarefa t: this.tarefas){
+            if(t.getDataFim().after(dateInicio) && t.getDataFim().before(dateFim) && t.getDono().equals(user)){
                 tarefas.add(t);
             }
         }
@@ -636,20 +608,24 @@ public class Repositorio implements Serializable{
         
         ArrayList<Tarefa> lista = new ArrayList<>();
         
-        for(Tarefa t: u.getTarefas()){
-            if(terminado){
-                if(t.isFinalizada()){
-                    if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
+        for(Tarefa t: this.tarefas){
+            if(t.getDono().equals(u)){
+                if(terminado){
+                    if(t.isFinalizada()){
+                        if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
+                            lista.add(t);
+                        } 
+                    }
+                }else{
+                    if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
                         lista.add(t);
-                    } 
+                        System.out.println(t.getDataInicio());
+
+                    }
                 }
-            }else{
-                if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
-                    lista.add(t);
-                    System.out.println(t.getDataInicio());
-                    
-                }
+               
             }
+            
         }
         return lista;
         
@@ -669,27 +645,24 @@ public class Repositorio implements Serializable{
         
         ArrayList<Tarefa> lista = new ArrayList<>();
         
-        for(Tarefa t: p.getTarefas()){
-            if(terminado){
-                if(t.isFinalizada()){
-                    if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
+        for(Tarefa t: this.tarefas){
+            if(t.getProjeto().equals(p)){
+                if(terminado){
+                    if(t.isFinalizada()){
+                        if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
+                            lista.add(t);
+                        }
+                    }
+                }else{
+                    if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
                         lista.add(t);
-                    } 
-                }
-            }else{
-                if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
-                    lista.add(t);
+                    }
                 }
             }
+            
         }
         return lista;
-        
     }
-    
-    
-    
-    
-    
     
     
     
@@ -698,38 +671,40 @@ public class Repositorio implements Serializable{
      * ESCRITA EM FICHEIROS
      * @param ficheiro - nome do ficheiro a escrever
      */
-    
-    
-    public static void serializar(String ficheiro) {
-        // Serializar um objeto para ficheiro
-        try (FileOutputStream fileOut = new FileOutputStream(ficheiro); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+    public static void guardarInformacao(String ficheiro) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(ficheiro); 
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(repo);
             out.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in " + ficheiro);
+            System.out.println("Informação guardada em: " + ficheiro);
         } catch (IOException ex) {
             System.out.println("Erro: " + ex.getMessage());
         }
     }
     
+    
    /**
     * LEITURA DO FICHEIRO
     * @param ficheiro - nome do ficheiro a ler
     */
-     
-    public void desserializar(String ficheiro) {
-        try (FileInputStream fileIn = new FileInputStream(ficheiro); ObjectInputStream in = new ObjectInputStream(fileIn);) {
-            repo = (Repositorio) in.readObject();
+    public void lerInformacao(String ficheiro) {
+        try {
+            FileInputStream fileIn = new FileInputStream(ficheiro); 
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            repo = (Repo) in.readObject();
             in.close();
             fileIn.close();
             System.out.printf("Ficheiro " + ficheiro + " lido com sucesso.");
         } catch (IOException ex) {
             System.out.println("Erro: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            System.out.println("Cliente class not found. " + ex.getMessage());
+            System.out.println("Classe não encontrada " + ex.getMessage());
         }
     }
 
+   
     
 
     

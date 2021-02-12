@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 
-import Classes.Repositorio;
+import Classes.Repo;
 import Exceptions.UtilizadorRepetido;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
@@ -22,14 +22,14 @@ import javax.swing.JPanel;
 public class JFrame extends javax.swing.JFrame {
 
     private static JFrame frame;
-    private JPanel painelVisivel;
+    private JPanel painelAtual;
     
     
     
     public JFrame() throws IOException, FileNotFoundException, ClassNotFoundException, UtilizadorRepetido{
         initComponents();
-        this.painelVisivel = this.jPanelInicial;
-        this.setContentPane(this.painelVisivel);
+        this.painelAtual = this.jPanelInicial;
+        this.setContentPane(this.painelAtual);
         //stack = new Stack () ;
         
     }
@@ -106,7 +106,7 @@ public class JFrame extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         Painel_inicial pInicial = new Painel_inicial ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanelInicial);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanelInicial);
         JFrame.getFrame().setSize(418, 300);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton1MouseClicked
@@ -142,14 +142,14 @@ public class JFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     frame = new JFrame() ;
-                    Repositorio.getInstance().desserializar(Repositorio.getFicheiro());
+                    Repo.getInstance().lerInformacao(Repo.getFicheiro());
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true);
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     frame.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(WindowEvent e) {
-                            Repositorio.serializar(Repositorio.getFicheiro());
+                            Repo.guardarInformacao(Repo.getFicheiro());
                         }
                     });
                 } catch (IOException ex) {
@@ -166,11 +166,11 @@ public class JFrame extends javax.swing.JFrame {
     }
     
     
-    public void AvancarParaPainel (JPanel painelOn, JPanel painelOf){
-        this.painelVisivel.setVisible(false);
-        this.painelVisivel = painelOn ;
-        this.setContentPane(this.painelVisivel);
-        this.painelVisivel.setVisible(true);
+    public void trocarPainel (JPanel painelEntra, JPanel painelSai){
+        this.painelAtual.setVisible(false);
+        this.painelAtual = painelEntra ;
+        this.setContentPane(this.painelAtual);
+        this.painelAtual.setVisible(true);
     }
     
     

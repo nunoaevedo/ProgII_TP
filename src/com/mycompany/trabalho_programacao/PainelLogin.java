@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Encripta;
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Utilizador;
 import Exceptions.ListaVazia;
 import Exceptions.LoginErrado;
@@ -28,7 +28,7 @@ public class PainelLogin extends javax.swing.JPanel {
         initComponents();
         
         try{
-            Repositorio.getInstance().addAdmin();
+            Repo.getInstance().addAdmin();
         }catch(UtilizadorRepetido ex){
             System.out.println(ex);
         }
@@ -152,10 +152,10 @@ public class PainelLogin extends javax.swing.JPanel {
             //String passwordEncriptada = Encripta.encriptaPassword(password);
             
             try {
-                Repositorio.getInstance().login(user, password);
+                Repo.getInstance().login(user, password);
                 
                 Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
-                JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+                JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
                 JFrame.getFrame().setSize(600, 400);
                 JFrame.getFrame().setLocationRelativeTo(null);
                 
@@ -170,7 +170,7 @@ public class PainelLogin extends javax.swing.JPanel {
 
     private void VoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VoltarMouseClicked
         Painel_inicial pInicial = new Painel_inicial ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(418, 300);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_VoltarMouseClicked

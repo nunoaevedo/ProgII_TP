@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Encripta;
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Role;
 import Classes.Utilizador;
 import Exceptions.UtilizadorRepetido;
@@ -214,7 +214,7 @@ public class Painel_CriarUserAdmin extends javax.swing.JPanel {
 
     private void VoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VoltarMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_VoltarMouseClicked
@@ -271,14 +271,14 @@ public class Painel_CriarUserAdmin extends javax.swing.JPanel {
             Utilizador user = new Utilizador(username, passwordEncriptada, nome, 0, role);
 
             try {
-                Repositorio.getInstance().addUtilizador(user);
+                Repo.getInstance().addUtilizador(user);
                 Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-                JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+                JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
                 JFrame.getFrame().setSize(600, 400);
                 JFrame.getFrame().setLocationRelativeTo(null);
                 
                 String historico = "Criou o utilizador " + user.getNome() ;
-                Repositorio.getInstance().addHistorico(historico);
+                Repo.getInstance().addHistorico(historico);
             } catch (UtilizadorRepetido ex) {
                 JOptionPane.showMessageDialog(null, ex);
                 Logger.getLogger(Painel_CriarUserAdmin.class.getName()).log(Level.SEVERE, null, ex);

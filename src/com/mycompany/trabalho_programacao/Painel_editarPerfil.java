@@ -6,7 +6,7 @@
 package com.mycompany.trabalho_programacao;
 
 import Classes.Encripta;
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Role;
 import Classes.Utilizador;
 import Exceptions.UsernameInexistente;
@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 public class Painel_editarPerfil extends javax.swing.JPanel {
 
     
-    Utilizador utilizador = Repositorio.getInstance().getUser();
+    Utilizador utilizador = Repo.getInstance().getUser();
     Utilizador perfil = null;
     
     /**
@@ -383,12 +383,12 @@ public class Painel_editarPerfil extends javax.swing.JPanel {
         
         if(perfil.equals(utilizador)){
             Painel_verPerfil pInicial = new Painel_verPerfil ();
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(450, 400);
             JFrame.getFrame().setLocationRelativeTo(null);
         }else{
             Painel_listaPerfis pInicial = new Painel_listaPerfis ();
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(450, 400);
             JFrame.getFrame().setLocationRelativeTo(null);
         }
@@ -422,10 +422,10 @@ public class Painel_editarPerfil extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Username vazio!");
         }else{
             try {
-                Repositorio.getInstance().changeUsername(perfil, username);
+                Repo.getInstance().changeUsername(perfil, username);
                 JOptionPane.showMessageDialog(null, "Username alterado!");
                 String historico = "Alterou o username de " + perfil.getNome() ;
-                Repositorio.getInstance().addHistorico(historico);
+                Repo.getInstance().addHistorico(historico);
             } catch (UtilizadorRepetido ex) {
                 JOptionPane.showMessageDialog(null, "Nome de utilizador já exsite!");
             }
@@ -450,7 +450,7 @@ public class Painel_editarPerfil extends javax.swing.JPanel {
                 perfil.setnHorasDiarias(horas);
                 JOptionPane.showMessageDialog(null, "Número de Horas diárias alterado com sucesso!");
                 String historico = "Alterou Horas Diárias de " + perfil.getNome();
-                Repositorio.getInstance().addHistorico(historico);
+                Repo.getInstance().addHistorico(historico);
                 
             }catch(NumberFormatException ex){
                 JOptionPane.showMessageDialog(null, "Insira um valor válido");
@@ -475,20 +475,20 @@ public class Painel_editarPerfil extends javax.swing.JPanel {
         }else if(passeAntiga.length() < 5 || passeAtual.length() < 5|| passeAtualConfirmar.length() < 5){
             JOptionPane.showMessageDialog(null, "Password deve conter pelo menos 5 caracteres!");
         }else try {
-            if(!Repositorio.getInstance().utilizadorPorUsername(perfil.getUsername()).getPassword().equals(passeAntigaEncripta)){
+            if(!Repo.getInstance().utilizadorPorUsername(perfil.getUsername()).getPassword().equals(passeAntigaEncripta)){
                 JOptionPane.showMessageDialog(null, "Password antiga errada!");
             }else if(!passeAtual.equals(passeAtualConfirmar)){
                 JOptionPane.showMessageDialog(null, "Password não coincidem!");
             }else{
                 
-                Repositorio.getInstance().changePassword(perfil.getUsername(), passeAtualEncripta);
+                Repo.getInstance().changePassword(perfil.getUsername(), passeAtualEncripta);
                 JOptionPane.showMessageDialog(null, "Password alterada com sucesso!");
                 this.passAntigaField.setText("");
                 this.passField.setText("");
                 this.passConfirmField.setText("");
                 
                 String historico = "Password alterada de " + perfil.getNome();
-                Repositorio.getInstance().addHistorico(historico);
+                Repo.getInstance().addHistorico(historico);
                 
                 
             }
@@ -503,19 +503,19 @@ public class Painel_editarPerfil extends javax.swing.JPanel {
         try{
             switch(index){
             case 0:
-                Repositorio.getInstance().changeRole(perfil.getUsername(), Role.User);
+                Repo.getInstance().changeRole(perfil.getUsername(), Role.User);
                 break;
             case 1:
-                 Repositorio.getInstance().changeRole(perfil.getUsername(), Role.UserManager);
+                 Repo.getInstance().changeRole(perfil.getUsername(), Role.UserManager);
                 break;
             case 2:
-                 Repositorio.getInstance().changeRole(perfil.getUsername(), Role.Admin);
+                 Repo.getInstance().changeRole(perfil.getUsername(), Role.Admin);
                 break;
             }
             JOptionPane.showMessageDialog(null, "Role alterada!");
             String historico = "Permissões alteradas de " + perfil.getNome();
 
-            Repositorio.getInstance().addHistorico(historico);
+            Repo.getInstance().addHistorico(historico);
         } catch (UsernameInexistente ex) {
             JOptionPane.showMessageDialog(null, "Username não existe!");
         }

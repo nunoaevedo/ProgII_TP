@@ -5,7 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Utilizador;
 
 /**
@@ -20,7 +20,7 @@ public class Painel_verPerfil extends javax.swing.JPanel {
     public Painel_verPerfil() {
         initComponents();
         
-        Utilizador utilizador = Repositorio.getInstance().getUser();
+        Utilizador utilizador = Repo.getInstance().getUser();
         
         this.usernameField.setText(utilizador.getUsername());
         this.nomeField.setText(utilizador.getNome());
@@ -155,7 +155,7 @@ public class Painel_verPerfil extends javax.swing.JPanel {
 
     private void voltarButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_voltarButtonMouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_voltarButtonMouseClicked
@@ -165,8 +165,8 @@ public class Painel_verPerfil extends javax.swing.JPanel {
     }//GEN-LAST:event_voltarButtonActionPerformed
 
     private void editarPerfilButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editarPerfilButtonMouseClicked
-        Painel_editarPerfil pInicial = new Painel_editarPerfil (Repositorio.getInstance().getUser());
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        Painel_editarPerfil pInicial = new Painel_editarPerfil (Repo.getInstance().getUser());
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(400, 525);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_editarPerfilButtonMouseClicked

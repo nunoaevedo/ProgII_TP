@@ -5,7 +5,7 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Repositorio;
+import Classes.Repo;
 import Classes.Tarefa;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -29,7 +29,7 @@ public class Painel_terminarTarefa extends javax.swing.JPanel {
     private void loadBox(){
         this.tarefaBox.removeAllItems();
         
-        for(Tarefa t : Repositorio.getInstance().getUser().getTarefas()){
+        for(Tarefa t : Repo.getInstance().getUser().getTarefas()){
             if(t.getDataFim() == null)
                 this.tarefaBox.addItem(t.getNome());
         }
@@ -204,7 +204,7 @@ public class Painel_terminarTarefa extends javax.swing.JPanel {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton3MouseClicked
@@ -226,17 +226,18 @@ public class Painel_terminarTarefa extends javax.swing.JPanel {
         
         String tarefa = this.tarefaBox.getItemAt(this.tarefaBox.getSelectedIndex());
         
-        Repositorio.getInstance().getUser().terminaTarefa(tarefa, d1);
+        Tarefa t = Repo.getInstance().getTarefaNome(tarefa);
+        t.terminaTarefa(d1);
         
         JOptionPane.showMessageDialog(null, "Tarefa Terminada");
         
         Painel_menuUtilizador pInicial = new Painel_menuUtilizador ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(600, 400);
         JFrame.getFrame().setLocationRelativeTo(null);
         
         String historico = "Terminou a tarefa " + tarefa ;
-        Repositorio.getInstance().addHistorico(historico);
+        Repo.getInstance().addHistorico(historico);
         
     }//GEN-LAST:event_FinalizarMouseClicked
 

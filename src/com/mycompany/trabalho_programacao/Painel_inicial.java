@@ -121,7 +121,7 @@ public class Painel_inicial extends javax.swing.JPanel {
 
     private void BotaoCriarContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoCriarContaMouseClicked
         Painel_CriarUser pInicial = new Painel_CriarUser ();  
-        JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+        JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
         JFrame.getFrame().setSize(400,400);
         JFrame.getFrame().setLocationRelativeTo(null);
         
@@ -136,7 +136,7 @@ public class Painel_inicial extends javax.swing.JPanel {
         PainelLogin pInicial;  
         try {
             pInicial = new PainelLogin ();
-            JFrame.getFrame().AvancarParaPainel(pInicial, this.jPanel1);
+            JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(408, 300);
             JFrame.getFrame().setLocationRelativeTo(null);
         } catch (UtilizadorRepetido ex) {
