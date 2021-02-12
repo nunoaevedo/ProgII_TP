@@ -375,7 +375,7 @@ public class Repo implements Serializable{
         Projeto p = this.getProjetoByName(nome);
         
         for(Utilizador u : utilizadores){
-            if(!(p.getConvidados().contains(u.getUsername()) || p.getDono().equals(u.getUsername()))){
+            if(!(p.getConvidados().contains(u) || p.getDono().equals(u))){
                 lista.add(u.getUsername());
             }
         }
@@ -409,16 +409,16 @@ public class Repo implements Serializable{
     
     /**
      * PROJETOS REALTIVOS A UM UTILIZADOR
-     * @param username -username do utilizador
+     * @param user -username do utilizador
      * @return - todos os projetos relativos a um utilizador
      */
     
-    public ArrayList<Projeto> getProjetosByUsername(String username){
+    public ArrayList<Projeto> getProjetosByUser(Utilizador user){
         
         ArrayList<Projeto> lista = new ArrayList<>();
         
         for(Projeto p:projetos)
-            if(p.getDono().equals(username) || p.getConvidados().contains(username))
+            if(p.getDono().equals(user) || p.getConvidados().contains(user))
                 lista.add(p);
             
         return lista;

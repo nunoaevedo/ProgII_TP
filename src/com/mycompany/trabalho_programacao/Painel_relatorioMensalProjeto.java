@@ -67,7 +67,7 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
                 
                 long ms = t.getDataFim().getTime() - t.getDataInicio().getTime();
                 int dias = (int) TimeUnit.DAYS.convert(ms, TimeUnit.MILLISECONDS)+1;
-                float valor = t.getPreco()*utilizador.getnHorasDiarias()*dias;
+                float valor = t.getPreco()*t.getDono().getnHorasDiarias()*dias;
                 
                 obj[3] = String.format("%,.2f", valor);
                 total +=valor;

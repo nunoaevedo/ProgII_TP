@@ -42,7 +42,7 @@ public class Painel_verConvites extends javax.swing.JPanel {
             obj[0] = convite.getNome();
             obj[1] = convite.getNomeCliente();
             obj[2] = convite.getPrecoHora();
-            obj[2] = convite.getDono();
+            obj[3] = convite.getDono().getNome();
 
             tabela.addRow(obj);
                 

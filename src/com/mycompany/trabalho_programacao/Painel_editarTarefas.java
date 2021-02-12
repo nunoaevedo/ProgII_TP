@@ -37,9 +37,8 @@ public class Painel_editarTarefas extends javax.swing.JPanel {
     
     public void loadBox(){
         this.projetoBox.removeAll();
-        String username = Repo.getInstance().getUser().getUsername();
         
-        for(Projeto p: Repo.getInstance().getProjetosByUsername(username)){
+        for(Projeto p: Repo.getInstance().getProjetosByUser(Repo.getInstance().getUser())){
             this.projetoBox.addItem(p.getNome());
         }
         

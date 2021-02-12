@@ -36,13 +36,12 @@ public class Painel_verProjetos extends javax.swing.JPanel {
     
     public void popularTabela(){
         Object obj[] = new Object[4];
-        String username = Repo.getInstance().getUser().getUsername();
-        for(Projeto p : Repo.getInstance().getProjetosByUsername(username) ){
+        for(Projeto p : Repo.getInstance().getProjetosByUser(Repo.getInstance().getUser()) ){
             obj[0] = p.getNome();
             obj[1] = p.getNomeCliente();
             String preco = String.format("%,.2f", p.getPrecoHora());
             obj[2] = preco;
-            obj[3] = p.getDono();
+            obj[3] = p.getDono().getNome();
             
             tabela.addRow(obj);
         }
@@ -230,7 +229,7 @@ public class Painel_verProjetos extends javax.swing.JPanel {
             return;
         }
         
-        if(proj.getDono().equals(Repo.getInstance().getUser().getUsername())){
+        if(proj.getDono().equals(Repo.getInstance().getUser())){
             Painel_retirarUtilizador pInicial = new Painel_retirarUtilizador(proj);  
             JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(450, 400);
@@ -254,7 +253,7 @@ public class Painel_verProjetos extends javax.swing.JPanel {
         String projeto = (String) this.tabelaProjetos.getValueAt(row, 0);
         Projeto proj = Repo.getInstance().getProjetoByName(projeto);
         
-        if(proj.getDono().equals(Repo.getInstance().getUser().getUsername())){
+        if(proj.getDono().equals(Repo.getInstance().getUser())){
             Painel_addUtilizador pInicial = new Painel_addUtilizador(proj);  
             JFrame.getFrame().trocarPainel(pInicial, this.jPanel1);
             JFrame.getFrame().setSize(450, 400);

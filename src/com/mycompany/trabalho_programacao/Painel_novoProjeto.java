@@ -221,12 +221,8 @@ public class Painel_novoProjeto extends javax.swing.JPanel {
         }else if(precoString.equals("")){
             JOptionPane.showMessageDialog(null, "Preço vazio!");
         }else{
-            
-            
-            
             try {
                 float preco = Float.parseFloat(precoString);
-                
                 
                 Repo.getInstance().addProjeto(nomeCliente, nome, preco, Repo.getInstance().getUser());
                 
