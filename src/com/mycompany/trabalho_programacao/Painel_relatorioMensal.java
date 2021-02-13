@@ -58,9 +58,9 @@ public class Painel_relatorioMensal extends javax.swing.JPanel {
         
         for(Tarefa t : Repo.getInstance().getTarefasRelatorioUtilizador(dataInicio, dataFim, isFinalizado, utilizador)){
             obj[0] = t.getNome();
-            obj[1] = t.getDataInicio();
+            obj[1] = t.getDataInicio().toLocaleString();
             try{
-                obj[2] = t.getDataFim();
+                obj[2] = t.getDataFim().toLocaleString();
                 
                 long ms = t.getDataFim().getTime() - t.getDataInicio().getTime();
                 int dias = (int) TimeUnit.DAYS.convert(ms, TimeUnit.MILLISECONDS)+1;

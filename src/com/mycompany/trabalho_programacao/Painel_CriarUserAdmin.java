@@ -281,7 +281,6 @@ public class Painel_CriarUserAdmin extends javax.swing.JPanel {
                 Repo.getInstance().addHistorico(historico);
             } catch (UtilizadorRepetido ex) {
                 JOptionPane.showMessageDialog(null, ex);
-                Logger.getLogger(Painel_CriarUserAdmin.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

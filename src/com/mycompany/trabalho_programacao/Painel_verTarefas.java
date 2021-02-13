@@ -8,8 +8,6 @@ package com.mycompany.trabalho_programacao;
 import Classes.Projeto;
 import Classes.Repo;
 import Classes.Tarefa;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -222,10 +220,10 @@ public class Painel_verTarefas extends javax.swing.JPanel {
         
             String historico = "Removeu a tarefa " + tarefa;
             Repo.getInstance().addHistorico(historico);
-
+            
             tabela.removeRow(row);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Nome de tarefa não existe");
+            JOptionPane.showMessageDialog(null, "Nome de tarefa não existe" +ex);
         }
     }//GEN-LAST:event_apagarTarefaMouseClicked
 

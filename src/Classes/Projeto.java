@@ -25,6 +25,7 @@ public class Projeto implements Serializable{
         this.precoHora = precoHora;
         this.dono = dono;
         this.convidados = new ArrayList<>();
+        this.tarefas = new ArrayList<>();
     }
 
     /**
@@ -99,6 +100,20 @@ public class Projeto implements Serializable{
 
     
     /**
+     * @return the tarefas
+     */
+    public ArrayList<Tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    /**
+     * @param tarefas the tarefas to set
+     */
+    public void setTarefas(ArrayList<Tarefa> tarefas) {
+        this.tarefas = tarefas;
+    }
+    
+    /**
      * ADICIONAR UTILIZADOR CONVIDADO AO PROJETO
      * @param user - utilizador a adicionar
      */
@@ -115,5 +130,14 @@ public class Projeto implements Serializable{
     public void removeConvidado(Utilizador user){
         this.convidados.remove(user);
     }
+    
+    /**
+     * ADICIONAR TAREFA
+     * @param t - tarefa a adiconar
+     */
+    public void addTarefa(Tarefa t){
+        this.tarefas.add(t);
+    }
+
     
 }

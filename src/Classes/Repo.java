@@ -470,24 +470,19 @@ public class Repo implements Serializable{
     
    /**
     * REMOVE TAREFA
-    * @param utilizador - utilizador
     * @param t - tarefa a remover
     */
     
     public void removeTarefa(Tarefa t) throws Exception{
-        
-        if(t.getProjeto() != null)
-            throw new Exception("A tarefa a remover possui um projeto associado!");
-        
         t.getDono().removeTarefa(t);
         this.tarefas.remove(t);
+        t.getProjeto().getTarefas().remove(t);
         
     }
     
     /**
      * GET TAREFA PELO NOME
-     * @param username - username do utilizador
-     * @param nome - nome da tarefa
+     * @param nomeTarefa - nome da tarefa
      * @return tarefa
      */
     
@@ -645,20 +640,19 @@ public class Repo implements Serializable{
         
         ArrayList<Tarefa> lista = new ArrayList<>();
         
-        for(Tarefa t: this.tarefas){
-            if(t.getProjeto().equals(p)){
-                if(terminado){
-                    if(t.isFinalizada()){
-                        if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
-                            lista.add(t);
-                        }
-                    }
-                }else{
-                    if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
+        for(Tarefa t: p.getTarefas()){
+            if(terminado){
+                if(t.isFinalizada()){
+                    if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
                         lista.add(t);
                     }
                 }
+            }else{
+                if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
+                    lista.add(t);
+                }
             }
+            
             
         }
         return lista;

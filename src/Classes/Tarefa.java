@@ -1,6 +1,7 @@
 package Classes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Tarefa implements Serializable{
@@ -141,6 +142,7 @@ public class Tarefa implements Serializable{
      */
     public void setProjeto(Projeto projeto) {
         this.projeto = projeto;
+        this.projeto.getTarefas().add(this);
     }
     
     

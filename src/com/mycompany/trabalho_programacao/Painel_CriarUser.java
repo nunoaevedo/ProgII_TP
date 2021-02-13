@@ -235,7 +235,7 @@ public class Painel_CriarUser extends javax.swing.JPanel {
                 JFrame.getFrame().setSize(408, 300);
                 JFrame.getFrame().setLocationRelativeTo(null);
             } catch (UtilizadorRepetido ex) {
-                Logger.getLogger(Painel_CriarUser.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Username já existe!");
             }
 
         }

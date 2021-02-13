@@ -296,7 +296,6 @@ public class Painel_editarTarefas extends javax.swing.JPanel {
         Repo.getInstance().addHistorico(historico);
         
         
-        
     }//GEN-LAST:event_descricaoButtonMouseClicked
 
     private void precoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_precoButtonMouseClicked

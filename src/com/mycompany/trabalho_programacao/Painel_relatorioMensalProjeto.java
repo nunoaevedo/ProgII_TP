@@ -23,7 +23,7 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
 
     DefaultTableModel tabela = new DefaultTableModel();
     
-    Projeto projeto =null;
+    Projeto projeto = null;
     boolean withData = false;
     boolean finalizado = true;
     
@@ -41,7 +41,7 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
         this.balancoTabela.setModel(tabela);
         
         Date dataInicio = new GregorianCalendar(1900,1,1).getTime();
-        Date dataFim = new GregorianCalendar(3000,1,1).getTime();
+        Date dataFim = new GregorianCalendar(2100,1,1).getTime();
         
         this.popularTabela(dataInicio, dataFim, finalizado, projeto);
         
@@ -51,9 +51,7 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
     
     
     public void popularTabela(Date dataInicio, Date dataFim, boolean finalizado, Projeto projeto){
-        
-        Utilizador utilizador = Repo.getInstance().getUser();
-        
+             
         tabela.setRowCount(0);
         Object obj[] = new Object[4];
         
@@ -61,9 +59,9 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
         
         for(Tarefa t : Repo.getInstance().getTarefasRelatorioProjeto(dataInicio, dataFim, finalizado, projeto)){
             obj[0] = t.getNome();
-            obj[1] = t.getDataInicio();
+            obj[1] = t.getDataInicio().toLocaleString();
             try{
-                obj[2] = t.getDataFim();
+                obj[2] = t.getDataFim().toLocaleString();
                 
                 long ms = t.getDataFim().getTime() - t.getDataInicio().getTime();
                 int dias = (int) TimeUnit.DAYS.convert(ms, TimeUnit.MILLISECONDS)+1;
@@ -307,11 +305,11 @@ public class Painel_relatorioMensalProjeto extends javax.swing.JPanel {
             try{
                 d2 = this.finalDate.getDate();
             }catch(NullPointerException e){
-                d2 = new GregorianCalendar(3000,1,1).getTime();
+                d2 = new GregorianCalendar(2100,1,1).getTime();
             }
         }else{
             d1 = new GregorianCalendar(1900,1,1).getTime();
-            d2 = new GregorianCalendar(3000,1,1).getTime();
+            d2 = new GregorianCalendar(2100,1,1).getTime();
         }
         
         
