@@ -7,9 +7,15 @@ package Exceptions;
 
 /**
  *
- * @author Demo
+ * @author Nuno
  */
 public class nomeRepetido extends Exception {
+    /**
+     * Constructs an instance of <code>UsernameInexistente</code> with the
+     * specified detail message.
+     *
+     * @param msg the detail message.
+     */
     public nomeRepetido(String msg) {
         super(msg);
     }

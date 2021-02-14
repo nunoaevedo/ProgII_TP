@@ -8,7 +8,6 @@ package com.mycompany.trabalho_programacao;
 import Classes.Repo;
 import Classes.Tarefa;
 import Classes.Utilizador;
-import java.time.Duration;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;

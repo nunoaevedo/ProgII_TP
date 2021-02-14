@@ -6,6 +6,7 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,285 +39,154 @@ public class UtilizadorTest {
     public void tearDown() {
     }
 
+    
+    
+    /*
     /**
      * Test of getUsername method, of class Utilizador.
      */
     @Test
-    public void testGetUsername() {
-        System.out.println("getUsername");
-        Utilizador instance = null;
-        String expResult = "";
+    public void testGetters() {
+        System.out.println("GETTERS");
+        Utilizador instance = new Utilizador("username", "password", "nome", 0, Role.User);
+        //GET USERNAME
+        System.out.println("Get Username");
+        String expResult = "username";
         String result = instance.getUsername();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setUsername method, of class Utilizador.
-     */
-    @Test
-    public void testSetUsername() {
-        System.out.println("setUsername");
-        String username = "";
-        Utilizador instance = null;
-        instance.setUsername(username);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getPassword method, of class Utilizador.
-     */
-    @Test
-    public void testGetPassword() {
-        System.out.println("getPassword");
-        Utilizador instance = null;
-        String expResult = "";
-        String result = instance.getPassword();
+        
+        //GET PASSWORD
+        System.out.println("Get Password");
+        expResult = "password";
+        result = instance.getPassword();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setPassword method, of class Utilizador.
-     */
-    @Test
-    public void testSetPassword() {
-        System.out.println("setPassword");
-        String password = "";
-        Utilizador instance = null;
-        instance.setPassword(password);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getNome method, of class Utilizador.
-     */
-    @Test
-    public void testGetNome() {
-        System.out.println("getNome");
-        Utilizador instance = null;
-        String expResult = "";
-        String result = instance.getNome();
+                
+        //GET NOME
+        System.out.println("Get Nome");
+        expResult = "nome";
+        result = instance.getNome();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        //GET HORAS
+        System.out.println("Get Horas");
+        int expResultHora = 0;
+        int resultHora = instance.getnHorasDiarias();
+        assertEquals(expResultHora, resultHora);
+        
+        //GET ROLE
+        System.out.println("Get Role");
+        Role expResultRole = Role.User;
+        Role resultRole = instance.getRole();
+        assertEquals(expResultRole, resultRole);
+        
     }
-
-    /**
-     * Test of setNome method, of class Utilizador.
-     */
+    
+    
     @Test
-    public void testSetNome() {
-        System.out.println("setNome");
-        String nome = "";
-        Utilizador instance = null;
-        instance.setNome(nome);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testSetters(){
+        System.out.println("SETTERS");
+        Utilizador instance = new Utilizador("username", "password", "nome", 0, Role.User);
+        //GET USERNAME
+        System.out.println("Set Username");
+        String expResult = "usernameSet";
+        instance.setUsername("usernameSet");
+        assertEquals(expResult, instance.getUsername());
+        
+        //GET PASSWORD
+        System.out.println("Set Password");
+        expResult = "passwordSet";
+        instance.setPassword("passwordSet");
+        assertEquals(expResult, instance.getPassword());
+                
+        //GET NOME
+        System.out.println("Set Nome");
+        expResult = "nomeSet";
+        instance.setNome("nomeSet");
+        assertEquals(expResult, instance.getNome());
+        
+        //GET HORAS
+        System.out.println("Set Horas");
+        int expResultHora = 3;
+        instance.setnHorasDiarias(3);
+        assertEquals(expResultHora, instance.getnHorasDiarias());
+        
+        //GET ROLE
+        System.out.println("Set Role");
+        Role expResultRole = Role.Admin;
+        instance.setRole(Role.Admin);
+        assertEquals(expResultRole, instance.getRole());
     }
-
-    /**
-     * Test of getnHorasDiarias method, of class Utilizador.
-     */
+    
+    
     @Test
-    public void testGetnHorasDiarias() {
-        System.out.println("getnHorasDiarias");
-        Utilizador instance = null;
-        int expResult = 0;
-        int result = instance.getnHorasDiarias();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testTarefas(){
+        System.out.println("TAREFAS");
+        
+        Utilizador instance = new Utilizador("username", "password", "nome", 0, Role.User);
+        Tarefa tarefa = new Tarefa("desc", "nome", new Date(), 1, instance);
+        ArrayList<Tarefa> lista = new ArrayList<>();
+        lista.add(tarefa);
+        
+        System.out.println("Adicionar Tarefas");
+        instance.addTarefa(tarefa);
+        assertEquals(tarefa, instance.getTarefas().get(0));
+        
+        System.out.println("Remover Tarefas");
+        instance.removeTarefa(tarefa);
+        assertEquals(0, instance.getTarefas().size());
+        
+        System.out.println("Set/Get Tarefas");
+        instance.setTarefas(lista);
+        assertEquals(lista, instance.getTarefas());
     }
-
-    /**
-     * Test of setnHorasDiarias method, of class Utilizador.
-     */
+    
     @Test
-    public void testSetnHorasDiarias() {
-        System.out.println("setnHorasDiarias");
-        int nHorasDiarias = 0;
-        Utilizador instance = null;
-        instance.setnHorasDiarias(nHorasDiarias);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getRole method, of class Utilizador.
-     */
-    @Test
-    public void testGetRole() {
-        System.out.println("getRole");
-        Utilizador instance = null;
-        Role expResult = null;
-        Role result = instance.getRole();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setRole method, of class Utilizador.
-     */
-    @Test
-    public void testSetRole() {
-        System.out.println("setRole");
-        Role role = null;
-        Utilizador instance = null;
-        instance.setRole(role);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getHistorico method, of class Utilizador.
-     */
-    @Test
-    public void testGetHistorico() {
-        System.out.println("getHistorico");
-        Utilizador instance = null;
-        ArrayList<Historico> expResult = null;
-        ArrayList<Historico> result = instance.getHistorico();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setHistorico method, of class Utilizador.
-     */
-    @Test
-    public void testSetHistorico() {
-        System.out.println("setHistorico");
-        ArrayList<Historico> historico = null;
-        Utilizador instance = null;
-        instance.setHistorico(historico);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getConvites method, of class Utilizador.
-     */
-    @Test
-    public void testGetConvites() {
-        System.out.println("getConvites");
-        Utilizador instance = null;
-        ArrayList<Projeto> expResult = null;
-        ArrayList<Projeto> result = instance.getConvites();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setConvites method, of class Utilizador.
-     */
-    @Test
-    public void testSetConvites() {
-        System.out.println("setConvites");
-        ArrayList<Projeto> convites = null;
-        Utilizador instance = null;
-        instance.setConvites(convites);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getTarefas method, of class Utilizador.
-     */
-    @Test
-    public void testGetTarefas() {
-        System.out.println("getTarefas");
-        Utilizador instance = null;
-        ArrayList<Tarefa> expResult = null;
-        ArrayList<Tarefa> result = instance.getTarefas();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setTarefas method, of class Utilizador.
-     */
-    @Test
-    public void testSetTarefas() {
-        System.out.println("setTarefas");
-        ArrayList<Tarefa> tarefas = null;
-        Utilizador instance = null;
-        instance.setTarefas(tarefas);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addHistorico method, of class Utilizador.
-     */
-    @Test
-    public void testAddHistorico() {
-        System.out.println("addHistorico");
-        String acao = "";
-        Utilizador instance = null;
-        instance.addHistorico(acao);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addConvite method, of class Utilizador.
-     */
-    @Test
-    public void testAddConvite() {
-        System.out.println("addConvite");
-        Projeto projeto = null;
-        Utilizador instance = null;
+    public void testConvites(){
+        System.out.println("CONVITES");
+        
+        Utilizador instance = new Utilizador("username", "password", "nome", 0, Role.User);
+        Projeto projeto = new Projeto("cliente", "nome", 1, instance);
+        ArrayList<Projeto> lista = new ArrayList<>();
+        lista.add(projeto);
+        
+        System.out.println("Adicionar Convites");
         instance.addConvite(projeto);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(projeto, instance.getConvites().get(0));
+        
+        System.out.println("Remover Convites");
+        instance.removeConvite(projeto.getNome());
+        assertEquals(0, instance.getConvites().size());
+        
+        System.out.println("Set/Get Convites");
+        instance.setConvites(lista);
+        assertEquals(lista, instance.getConvites());
     }
-
-    /**
-     * Test of removeConvite method, of class Utilizador.
-     */
+    
+    
     @Test
-    public void testRemoveConvite() {
-        System.out.println("removeConvite");
-        String nomeProjeto = "";
-        Utilizador instance = null;
-        instance.removeConvite(nomeProjeto);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testHistorico(){
+        System.out.println("HISTORICO");
+        
+        Utilizador instance = new Utilizador("username", "password", "nome", 0, Role.User);
+        
+        System.out.println("Adicionar Historico");
+        instance.addHistorico("teste");
+        assertEquals("teste", instance.getHistorico().get(0).getAcao());  
+        
+        System.out.println("Set/Get Historico");
+        
+        ArrayList<Historico> lista = new ArrayList<>();
+        Historico historico = new Historico("teste2");
+        lista.add(historico);
+        instance.setHistorico(lista);
+        assertEquals(lista, instance.getHistorico());
     }
+    
+    
+    
+    
+    
 
-    /**
-     * Test of addTarefa method, of class Utilizador.
-     */
-    @Test
-    public void testAddTarefa() {
-        System.out.println("addTarefa");
-        Tarefa t = null;
-        Utilizador instance = null;
-        instance.addTarefa(t);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of removeTarefa method, of class Utilizador.
-     */
-    @Test
-    public void testRemoveTarefa() {
-        System.out.println("removeTarefa");
-        Tarefa t = null;
-        Utilizador instance = null;
-        instance.removeTarefa(t);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
     
 }

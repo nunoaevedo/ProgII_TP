@@ -9,8 +9,6 @@ import Classes.Projeto;
 import Classes.Repo;
 import Classes.Utilizador;
 import Exceptions.UsernameInexistente;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**

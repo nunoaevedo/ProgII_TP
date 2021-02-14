@@ -10,8 +10,6 @@ import Classes.Repo;
 import Classes.Role;
 import Classes.Utilizador;
 import Exceptions.UtilizadorRepetido;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 

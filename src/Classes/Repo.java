@@ -446,20 +446,15 @@ public class Repo implements Serializable{
     }
     
     
-    
-    
-    
-    
     /**
      * ADICIONAR TAREFA
      * @param descricao - descrição da tarefa
      * @param nome - nome da tarefa
      * @param dataInicio - data inciail da tarefa
      * @param preco - preco da tarefa
+     * @param dono - dono da tarefa
      * @throws nomeRepetido - Se houver uma tarefa existente com o mesmo nome lança exceçao
      */
-    
-    
     public void addTarefa(String descricao, String nome, Date dataInicio, float preco, Utilizador dono) throws nomeRepetido{
         
         Tarefa t = new Tarefa(descricao, nome, dataInicio, preco, dono);
@@ -469,11 +464,10 @@ public class Repo implements Serializable{
     
     
    /**
-    * REMOVE TAREFA
+    * * REMOVE TAREFA
     * @param t - tarefa a remover
     */
-    
-    public void removeTarefa(Tarefa t) throws Exception{
+    public void removeTarefa(Tarefa t){
         t.getDono().removeTarefa(t);
         this.tarefas.remove(t);
         t.getProjeto().getTarefas().remove(t);
@@ -485,7 +479,6 @@ public class Repo implements Serializable{
      * @param nomeTarefa - nome da tarefa
      * @return tarefa
      */
-    
     public Tarefa getTarefaNome(String nomeTarefa){
         for(Tarefa t: this.tarefas)
             if(t.getNome().equals(nomeTarefa))
@@ -501,7 +494,6 @@ public class Repo implements Serializable{
      * @param nomeTarefa - nome da tarefa
      * @param novaDescricao - nova descricao da tarefa
      */
-    
     public void alteraDescricaoTarefa(String username, String nomeTarefa, String novaDescricao){
         
         for(int i=0 ; i<utilizadores.size(); i++){
@@ -526,7 +518,6 @@ public class Repo implements Serializable{
      * @param nomeTarefa - 
      * @param preco - novo preco da tarefa
      */
-    
     public void alteraPrecoTarefa(String username, String nomeTarefa, float preco){
         
         for(int i=0 ; i<utilizadores.size(); i++){
@@ -546,8 +537,7 @@ public class Repo implements Serializable{
     
     /**
      * ADICIONAR TAEFA A PROJETO
-     * @param username - username do utilizador que adiciona a tarefa
-     * @param tarefaNome - nome da tarefa a adicionar
+     * @param tarefa - tarefa em questão
      * @param projeto - nome do projeto a alterar
      */
     
@@ -559,7 +549,6 @@ public class Repo implements Serializable{
      * REMOVER TAREFA DO PROJETO EM QUESTÃO
      * @param tarefa - nome da tarefa a remover
      */
-    
     public void removeTarefaProjeto(Tarefa tarefa){
         tarefa.setProjeto(null);
     }
@@ -569,17 +558,17 @@ public class Repo implements Serializable{
     
     /**
      * TAREFAS  TERMINADAS
-     * @param dateInicio
-     * @param dateFim
+     * @param user - utilizador em questão
+     * @param dateInicio - data de inicio
+     * @param dateFim - datafinal
      * @return tarefas que foram terminadas 
      */
-    
     public ArrayList<Tarefa> tarefasTerminadas(Utilizador user, Date dateInicio, Date dateFim){
         
         ArrayList<Tarefa> tarefas = new ArrayList<>();
         
-        for(Tarefa t: this.tarefas){
-            if(t.getDataFim().after(dateInicio) && t.getDataFim().before(dateFim) && t.getDono().equals(user)){
+        for(Tarefa t: user.getTarefas()){
+            if(t.getDataFim().after(dateInicio) && t.getDataFim().before(dateFim)){
                 tarefas.add(t);
             }
         }
@@ -587,6 +576,7 @@ public class Repo implements Serializable{
         return tarefas;
         
     }
+    
     
     /**
      * TAREFAS DO UTILIZADOR
@@ -596,30 +586,24 @@ public class Repo implements Serializable{
      * @param u - utilizador em questão
      * @return - tarefas do utilizador passado como parametro com base na data inicial final e se foram terminadas ou nao
      */
-    
-    
-    
     public ArrayList<Tarefa> getTarefasRelatorioUtilizador(Date datainicio, Date datafim, boolean terminado, Utilizador u ){
         
         ArrayList<Tarefa> lista = new ArrayList<>();
         
-        for(Tarefa t: this.tarefas){
-            if(t.getDono().equals(u)){
-                if(terminado){
-                    if(t.isFinalizada()){
-                        if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
-                            lista.add(t);
-                        } 
-                    }
-                }else{
-                    if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
+        for(Tarefa t: u.getTarefas()){
+            if(terminado){
+                if(t.isFinalizada()){
+                    if(t.getDataInicio().after(datainicio) && t.getDataFim().before(datafim)){
                         lista.add(t);
-                        System.out.println(t.getDataInicio());
-
-                    }
+                    } 
                 }
-               
+            }else{
+                if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
+                    lista.add(t);
+                }
             }
+               
+            
             
         }
         return lista;
@@ -634,8 +618,6 @@ public class Repo implements Serializable{
      * @param p - projeto em questão
      * @return - tarefas do projeto passado como parametro com base na data inicial final e se foram terminadas ou nao
      */
-    
-    
     public ArrayList<Tarefa> getTarefasRelatorioProjeto(Date datainicio, Date datafim, boolean terminado, Projeto p ){
         
         ArrayList<Tarefa> lista = new ArrayList<>();
@@ -651,9 +633,7 @@ public class Repo implements Serializable{
                 if(t.getDataInicio().after(datainicio) && t.getDataInicio().before(datafim)){
                     lista.add(t);
                 }
-            }
-            
-            
+            } 
         }
         return lista;
     }
@@ -667,11 +647,11 @@ public class Repo implements Serializable{
      */
     public static void guardarInformacao(String ficheiro) {
         try {
-            FileOutputStream fileOut = new FileOutputStream(ficheiro); 
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            FileOutputStream ficheiroSaida = new FileOutputStream(ficheiro); 
+            ObjectOutputStream out = new ObjectOutputStream(ficheiroSaida);
             out.writeObject(repo);
             out.close();
-            fileOut.close();
+            ficheiroSaida.close();
             System.out.println("Informação guardada em: " + ficheiro);
         } catch (IOException ex) {
             System.out.println("Erro: " + ex.getMessage());
@@ -685,11 +665,11 @@ public class Repo implements Serializable{
     */
     public void lerInformacao(String ficheiro) {
         try {
-            FileInputStream fileIn = new FileInputStream(ficheiro); 
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+            FileInputStream ficheiroEntrada = new FileInputStream(ficheiro); 
+            ObjectInputStream in = new ObjectInputStream(ficheiroEntrada);
             repo = (Repo) in.readObject();
             in.close();
-            fileIn.close();
+            ficheiroEntrada.close();
             System.out.printf("Ficheiro " + ficheiro + " lido com sucesso.");
         } catch (IOException ex) {
             System.out.println("Erro: " + ex.getMessage());

@@ -5,7 +5,6 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Projeto;
 import Classes.Repo;
 import Classes.Tarefa;
 import javax.swing.JOptionPane;

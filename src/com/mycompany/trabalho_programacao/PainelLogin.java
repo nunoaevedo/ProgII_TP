@@ -5,7 +5,6 @@
  */
 package com.mycompany.trabalho_programacao;
 
-import Classes.Encripta;
 import Classes.Repo;
 import Classes.Utilizador;
 import Exceptions.ListaVazia;

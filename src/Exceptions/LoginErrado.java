@@ -7,10 +7,15 @@ package Exceptions;
 
 /**
  *
- * @author Demo
+ * @author Nuno
  */
 public class LoginErrado extends Exception {
-    
+    /**
+     * Constructs an instance of <code>ProjetoRepetido</code> with the specified
+     * detail message.
+     *
+     * @param msg the detail message.
+     */
     public LoginErrado(String msg) {
         super(msg);
     }
